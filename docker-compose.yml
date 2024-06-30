@@ -1,0 +1,85 @@
+services:
+  database:
+    image: mariadb:11.4.2
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    networks:
+      - nextcloud
+    volumes:
+      - ./volumes/database/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.5-alpine
+    networks:
+      - nextcloud
+    restart: unless-stopped
+
+  web:
+    image: nginx:1.27.0-alpine
+    networks:
+      - nextcloud
+    ports:
+      - 80:80
+    volumes:
+      - nextcloud:/var/www/html
+      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/config:/var/www/html/config
+      - ./volumes/nextcloud/theme:/var/www/html/themes
+      - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  app:
+    image: nextcloud:27.1.11-fpm-ext
+    build:
+      dockerfile: ./dockerfiles/nextcloud/Dockerfile
+    depends_on:
+      - database
+      - redis
+    networks:
+      - nextcloud
+    volumes:
+      - nextcloud:/var/www/html:z
+      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/config:/var/www/html/config
+      - ./volumes/nextcloud/data:/var/www/html/data
+      - ./volumes/nextcloud/theme:/var/www/html/themes
+      - ./volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_HOST
+      - REDIS_HOST
+      - OVERWRITEHOST
+      - APACHE_DISABLE_REWRITE_IP
+      - NEXTCLOUD_ADMIN_USER
+      - NEXTCLOUD_ADMIN_PASSWORD
+    restart: unless-stopped
+
+  cron:
+    image: nextcloud:27.1.11-fpm-ext
+    depends_on:
+      - database
+      - redis
+    networks:
+      - nextcloud
+    volumes:
+      - nextcloud:/var/www/html:z
+      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/config:/var/www/html/config
+      - ./volumes/nextcloud/data:/var/www/html/data
+      - ./volumes/nextcloud/theme:/var/www/html/themes
+      - ./volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    entrypoint: /cron.sh
+    restart: unless-stopped
+
+networks:
+  nextcloud:
+
+volumes:
+  nextcloud:
