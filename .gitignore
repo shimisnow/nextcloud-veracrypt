@@ -1,8 +1,8 @@
 volumes/database/data/*
 !volumes/database/data/.gitkeep
 
-volumes/nextcloud/apps/*
-!volumes/nextcloud/apps/.gitkeep
+volumes/nextcloud/custom_apps/*
+!volumes/nextcloud/custom_apps/.gitkeep
 volumes/nextcloud/config/*
 !volumes/nextcloud/config/.gitkeep
 volumes/nextcloud/data/*

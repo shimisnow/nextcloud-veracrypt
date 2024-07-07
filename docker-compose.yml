@@ -27,7 +27,7 @@ services:
       - 80:80
     volumes:
       - nextcloud:/var/www/html
-      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/custom_apps:/var/www/html/custom_apps
       - ./volumes/nextcloud/config:/var/www/html/config
       - ./volumes/nextcloud/theme:/var/www/html/themes
       - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -44,7 +44,7 @@ services:
       - nextcloud
     volumes:
       - nextcloud:/var/www/html:z
-      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/custom_apps:/var/www/html/custom_apps
       - ./volumes/nextcloud/config:/var/www/html/config
       - ./volumes/nextcloud/data:/var/www/html/data
       - ./volumes/nextcloud/theme:/var/www/html/themes
@@ -70,7 +70,7 @@ services:
       - nextcloud
     volumes:
       - nextcloud:/var/www/html:z
-      - ./volumes/nextcloud/apps:/var/www/html/custom_apps
+      - ./volumes/nextcloud/custom_apps:/var/www/html/custom_apps
       - ./volumes/nextcloud/config:/var/www/html/config
       - ./volumes/nextcloud/data:/var/www/html/data
       - ./volumes/nextcloud/theme:/var/www/html/themes
