@@ -25,19 +25,19 @@ Mounting the volumes
 ```sh
 sudo veracrypt --text --mount /mnt/WD4TB/Volumes/T8PSN100_nextcloud_stack /media/T8PSN100_nextcloud_stack --fs-options "umask=000" --pim 0 --keyfiles "" --protect-hidden no --slot 10
 
-sudo veracrypt --text --mount /mnt/WD4TB/Volumes/T8PSN100_nextcloud_data /media/T8PSN100_nextcloud_data --fs-options "umask=007,gid=33,uid=1000" --pim 0 --keyfiles "" --protect-hidden no --slot 11
+sudo veracrypt --text --mount /mnt/WD4TB/Volumes/T8PSN100_nextcloud_data /media/T8PSN100_nextcloud_data --fs-options "umask=007,gid=33,uid=33" --pim 0 --keyfiles "" --protect-hidden no --slot 11
 ```
 
 Starting the docker containers
 
 ```sh
-sudo docker compose up -d
+sudo docker compose start
 ```
 
 Stoping the docker containers
 
 ```sh
-sudo docker compose down
+sudo docker compose stop
 ```
 
 ```sh
