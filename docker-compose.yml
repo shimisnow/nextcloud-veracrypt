@@ -19,6 +19,12 @@ services:
       - nextcloud
     restart: unless-stopped
 
+  imaginary:
+    image: nextcloud/aio-imaginary:20241125_091756
+    networks:
+      - nextcloud
+    restart: unless-stopped
+
   web:
     # uses a modified version of: https://github.com/macbre/docker-nginx-http3
     image: ${NGINX_IMAGE}:${NGINX_VERSION}
@@ -45,6 +51,7 @@ services:
     depends_on:
       - database
       - redis
+      - imaginary
     networks:
       - nextcloud
     volumes:
