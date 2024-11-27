@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Enter the password to the volumes:"
-read password
+read -s password
 
 docker compose stop
 
