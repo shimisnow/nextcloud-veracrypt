@@ -1,15 +1,26 @@
+
+
+
+```sh
+docker compose build web
+docker compose build app
+```
+
+```sh
+docker secret create NEXTCLOUD_MYSQL_ROOT_PASSWORD <file_with_secret_data>
+docker secret create NEXTCLOUD_MYSQL_USER <file_with_secret_data>
+docker secret create NEXTCLOUD_MYSQL_PASSWORD <file_with_secret_data>
+```
+
+
+After creating the app container, adjust all file permissions
+
 ```sh
 docker compose exec app chown -R www-data:www-data /var/www/html/data
 docker compose exec app chmod -R 0770 /var/www/html/data
 ```
 
-```sh
-docker compose exec --user www-data app php occ files:scan drive
-docker compose exec --user www-data app php occ memories:index --user=drive --folder=/Photos/2024/08-Agosto
-docker compose exec --user www-data app php occ preview:generate-all
-docker compose exec --user www-data app php occ recognize:classify
-docker compose exec --user www-data app php occ recognize:cluster-faces
-```
+
 
 ## VeraCrypt
 

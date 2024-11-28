@@ -1,29 +1,4 @@
 services:
-  database:
-    image: mariadb:${MARIADB_VERSION}
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
-    networks:
-      - nextcloud
-    volumes:
-      - ${DATABASE_VOLUME_BASE_PATH}/volumes/database/data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - MYSQL_DATABASE
-    restart: unless-stopped
-
-  redis:
-    image: redis:${REDIS_VERSION}
-    networks:
-      - nextcloud
-    restart: unless-stopped
-
-  imaginary:
-    image: nextcloud/aio-imaginary:20241125_091756
-    networks:
-      - nextcloud
-    restart: unless-stopped
 
   web:
     # uses a modified version of: https://github.com/macbre/docker-nginx-http3
@@ -33,54 +8,9 @@ services:
       args:
         NGINX_USER_UID: 33
         NGINX_GROUP_GID: 33
-    networks:
-      - nextcloud
-    ports:
-      - '443:443/tcp'
-      - '443:443/udp' # UDP for usage of HTTP/3
-    volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${NGINX_VOLUME_BASE_PATH}/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${CERTIFICATES_VOLUME_BASE_PATH}/volumes/certs:/certs
-    restart: unless-stopped
 
   app:
     image: nextcloud:${NEXTCLOUD_VERSION}
     build:
       dockerfile: ./dockerfiles/nextcloud/Dockerfile
-    depends_on:
-      - database
-      - redis
-      - imaginary
-    networks:
-      - nextcloud
-    volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
-    environment:
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - MYSQL_DATABASE
-      - MYSQL_HOST
-      - REDIS_HOST
-      - OVERWRITEHOST
-      - APACHE_DISABLE_REWRITE_IP
-      - NEXTCLOUD_ADMIN_USER
-      - NEXTCLOUD_ADMIN_PASSWORD
-    restart: unless-stopped
 
-  cron:
-    image: nextcloud:${NEXTCLOUD_VERSION}
-    depends_on:
-      - database
-      - redis
-    networks:
-      - nextcloud
-    volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
-    entrypoint: /cron.sh
-    restart: unless-stopped
-
-networks:
-  nextcloud:

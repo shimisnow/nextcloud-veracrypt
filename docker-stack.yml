@@ -1,0 +1,105 @@
+services:
+  database:
+    image: ${DATABASE_IMAGE}
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    networks:
+      - nextcloud
+    volumes:
+      - ${DATABASE_VOLUME_BASE_PATH}/volumes/database/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=/run/secrets/NEXTCLOUD_MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=/run/secrets/NEXTCLOUD_MYSQL_USER
+      - MYSQL_PASSWORD=/run/secrets/NEXTCLOUD_MYSQL_PASSWORD
+      - MYSQL_DATABASE
+    secrets:
+      - NEXTCLOUD_MYSQL_ROOT_PASSWORD
+      - NEXTCLOUD_MYSQL_USER
+      - NEXTCLOUD_MYSQL_PASSWORD
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  redis:
+    image: ${CACHE_IMAGE}
+    networks:
+      - nextcloud
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  imaginary:
+    image: ${IMAGINARY_IMAGE}
+    networks:
+      - nextcloud
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  web:
+    # uses a modified version of: https://github.com/macbre/docker-nginx-http3
+    # needs to be build with docker compose build web
+    image: ${NGINX_IMAGE}
+    networks:
+      - nextcloud
+    ports:
+      - '443:443/tcp'
+      - '443:443/udp' # UDP for usage of HTTP/3
+    volumes:
+      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
+      - ${NGINX_VOLUME_BASE_PATH}/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${CERTIFICATES_VOLUME_BASE_PATH}/volumes/certs:/certs
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: ${NEXTCLOUD_IMAGE}
+    networks:
+      - nextcloud
+    volumes:
+      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
+      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    environment:
+      - MYSQL_HOST
+      - MYSQL_DATABASE
+      - MYSQL_USER=/run/secrets/NEXTCLOUD_MYSQL_USER
+      - MYSQL_PASSWORD=/run/secrets/NEXTCLOUD_MYSQL_PASSWORD
+      - REDIS_HOST
+      - OVERWRITEHOST
+      - APACHE_DISABLE_REWRITE_IP
+    secrets:
+      - NEXTCLOUD_MYSQL_USER
+      - NEXTCLOUD_MYSQL_PASSWORD
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  cron:
+    image: ${NEXTCLOUD_IMAGE}
+    networks:
+      - nextcloud
+    volumes:
+      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
+      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    entrypoint: /cron.sh
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  nextcloud:
+    driver: overlay
+
+secrets:
+  NEXTCLOUD_MYSQL_ROOT_PASSWORD:
+    external: true
+  NEXTCLOUD_MYSQL_USER:
+    external: true
+  NEXTCLOUD_MYSQL_PASSWORD:
+    external: true
