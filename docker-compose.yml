@@ -2,7 +2,7 @@ services:
 
   web:
     # uses a modified version of: https://github.com/macbre/docker-nginx-http3
-    image: ${NGINX_IMAGE}:${NGINX_VERSION}
+    image: ${NGINX_IMAGE}
     build:
       context: ./dockerfiles/nginx/
       args:
@@ -10,7 +10,7 @@ services:
         NGINX_GROUP_GID: 33
 
   app:
-    image: nextcloud:${NEXTCLOUD_VERSION}
+    image: ${NEXTCLOUD_IMAGE}
     build:
-      dockerfile: ./dockerfiles/nextcloud/Dockerfile
+      context: ./dockerfiles/nextcloud/
 

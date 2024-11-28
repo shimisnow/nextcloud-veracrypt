@@ -12,6 +12,8 @@ docker secret create NEXTCLOUD_MYSQL_USER <file_with_secret_data>
 docker secret create NEXTCLOUD_MYSQL_PASSWORD <file_with_secret_data>
 ```
 
+docker run -it --rm ymuski/curl-http3 curl -ILv --insecure https://nextcloud.local --http3
+
 
 After creating the app container, adjust all file permissions
 
