@@ -4,7 +4,7 @@ services:
     # uses a modified version of: https://github.com/macbre/docker-nginx-http3
     image: ${NGINX_IMAGE}
     build:
-      context: ./dockerfiles/nginx/
+      context: https://github.com/macbre/docker-nginx-http3.git
       args:
         NGINX_USER_UID: 33
         NGINX_GROUP_GID: 33
