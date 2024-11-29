@@ -57,6 +57,7 @@ with content
 ```sh
 [Unit]
 Description=Open Nextcloud Veracrypt volumes
+Before=docker.service
 After=network.target
 
 [Service]

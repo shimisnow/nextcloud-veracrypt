@@ -45,12 +45,13 @@ nextcloud --> services
 
 state "Veracrypt" as veracrypt {
     state "Data Volume" as veracrypt_data {
-        state "Nextcloud Data" as veracrypt_nextcloud
+        state "Nextcloud data" as veracrypt_nextcloud
     }
     state "Stack Volume" as veracrypt_stack {
-        state "Database Data" as veracrypt_database
+        state "Database data" as veracrypt_database
         state "Nginx config" as veracrypt_nginx
         state "PHP config" as veracrypt_php
+        state "SSL certificates" as veracrypt_certs
     }
 }
 
@@ -64,14 +65,13 @@ database --> veracrypt_stack
 
 This project uses:
 
+- [Nginx](https://hub.docker.com/r/macbre/nginx-http3) with a custom compiled version to support HTTP/3 and Brotli
+- [Nexcloud](https://hub.docker.com/_/nextcloud) with a custom extended version to include ffmpeg, zip, and others
 - [MariaDB](https://hub.docker.com/_/mariadb) as database
 - [Redis](https://hub.docker.com/_/redis) as cache
 - [Imaginary](https://github.com/h2non/imaginary) to process images
-- [Nginx](https://hub.docker.com/r/macbre/nginx-http3) with a custom compiled version to support HTTP/3 and Brotli
-- [Nexcloud](https://hub.docker.com/_/nextcloud) with a custom extended version to include ffmpeg, zip, and others
 
 ## Documentation
 
-- [How to manually mount Veracrypt volumes](docs/mounting-volumes.md)
-- [How to automatically mount Veracrypt volumes at boot](docs/open-volumes-boot.md)
 - [How to deploy](docs/how-to-deploy.md)
+- [How to automatically mount Veracrypt volumes at boot](docs/open-volumes-boot.md)
