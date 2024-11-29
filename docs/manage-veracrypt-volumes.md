@@ -1,13 +1,6 @@
-# Manually mounting Veracrypt volumes
+# Manually managing Veracrypt volumes
 
-Creating the mounting devices
-
-```sh
-sudo mkdir /media/T8PSN100_nextcloud_stack
-sudo mkdir /media/T8PSN100_nextcloud_data
-```
-
-Mounting the volumes
+## Mount
 
 ```sh
 sudo veracrypt \
@@ -28,10 +21,10 @@ sudo veracrypt \
     --fs-options "umask=007,gid=33,uid=33" \
     --pim 0 \
     --keyfiles "" \
-    --protect-hidden no \
+    --protect-hidden no
 ```
 
-Unmounting the volumes
+## Unmounting
 
 ```sh
 sudo veracrypt --text --dismount --slot 10

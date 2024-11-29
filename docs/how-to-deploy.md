@@ -1,5 +1,10 @@
 # How to deploy
 
+Create volumes
+Create folders
+Copy php, nginx
+Generate certs and copy
+
 ## Build the Docker images
 
 1. `web` builds a image with nginx using quic (http3) and brotli for compression
