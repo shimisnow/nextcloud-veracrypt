@@ -1,4 +1,4 @@
-![](docs/images/nextcloud-header.png)
+![](docs/images/nextcloud-veracrypt-header.png)
 
 # Nextcloud with Veracrypt
 
@@ -6,9 +6,7 @@ This project automates the deployment of Nextcloud using Docker, with [NGINX](ht
 
 ## The WHY of the project
 
-The idea for this project stemmed from my frustration with the rising costs of storing my files, particularly my photos, on cloud services. Not only was I tired of paying subscription fees, but I also wanted greater control over my data and privacy. The cloud solutions available didn’t meet all my needs, especially when it came to managing and accessing my files the way I wanted to.
-
-I envisioned a system that allowed me to interact with my files both in a timeline-like view and through traditional file and folder navigation. I wanted to create albums, but I also needed the flexibility to browse my files in a more familiar, structured manner. Most importantly, I wanted to ensure that all of my data was encrypted, so it would be secure from unauthorized access while still being easily accessible from multiple platforms, including Windows and Linux.
+I envisioned a system that allowed me to interact with my files in a timeline-like view, create albums, and through traditional file and folder navigation at multiple platforms, including Windows and Linux. Most importantly, I wanted to ensure that all of my data was encrypted.
 
 Veracrypt became a key part of this solution. It allowed me to create encrypted containers that could be mounted as virtual drives, enabling me to browse and manage my files just like any regular filesystem on both Windows and Linux. This gave me the security of encryption without sacrificing the ease of access and flexibility I needed to organize and view my files across different operating systems.
 
