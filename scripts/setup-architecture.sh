@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load variables from file
-source "vars.conf"
+source "../.env"
 
 echo "ARCHITECTURE SETUP STARTED"
 

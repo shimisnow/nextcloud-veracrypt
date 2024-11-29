@@ -21,7 +21,7 @@ state "Veracrypt" as veracrypt {
 
 ## Define variables
 
-Set the variables at the file `scripts/vars.conf` as follow:
+Set the variables at the file `.env` as follow:
 
 - `STACK_VERACRYPT_VOLUME_FILE`: Absolute path to Veracrypt volume that will store the stack data
 - `DATA_VERACRYPT_VOLUME_FILE`: Absolute path to Veracrypt volume that will store the nextcloud data

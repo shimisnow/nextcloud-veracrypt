@@ -66,15 +66,7 @@ docker secret create NEXTCLOUD_MYSQL_PASSWORD <file_with_secret_data>
 
 ## Deploy
 
-At the project root, run `./scripts/mount-veracrypt-volumes.sh` to open the Veracrypt volumes
-
-Change the paths at the `.env` file to the same ones used at the file `scripts/vars.conf`. Variables that needs to be set:
-
-- DATABASE_VOLUME_BASE_PATH
-- NGINX_VOLUME_BASE_PATH
-- CERTIFICATES_VOLUME_BASE_PATH
-- PHP_VOLUME_BASE_PATH
-- NEXTCLOUD_VOLUME_BASE_PATH
+At the project root, run `./scripts/mount-veracrypt-volumes.sh` to open the Veracrypt volumes and then deploy the stack
 
 ```sh
 docker stack deploy -c docker-stack.yml nextcloud
