@@ -72,4 +72,3 @@ This project uses:
 ## Documentation
 
 - [How to deploy](docs/how-to-deploy.md)
-- [How to automatically mount Veracrypt volumes at boot](docs/open-volumes-boot.md)
