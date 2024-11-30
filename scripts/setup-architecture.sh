@@ -31,12 +31,12 @@ echo "--------"
 ##### MOUNT VERACRYPT VOLUMES #####
 ###################################
 
-sudo veracrypt --text --slot $STACK_VERACRYPT_SLOT \
+veracrypt --text --slot $STACK_VERACRYPT_SLOT \
   --mount $STACK_VERACRYPT_VOLUME_FILE $STACK_MOUNT_POINT \
   --fs-options "umask=000" --pim 0 --keyfiles "" --protect-hidden no \
   --password="$STACK_VERACRYPT_VOLUME_PASSWORD"
 
-sudo veracrypt --text --slot $DATA_VERACRYPT_SLOT \
+veracrypt --text --slot $DATA_VERACRYPT_SLOT \
   --mount $DATA_VERACRYPT_VOLUME_FILE $DATA_MOUNT_POINT \
   --fs-options "umask=007,gid=33,uid=33" --pim 0 --keyfiles "" --protect-hidden no \
   --password="$DATA_VERACRYPT_VOLUME_PASSWORD"
@@ -126,8 +126,8 @@ echo "--------"
 ##### CLOSE VERACRYPT VOLUMES #####
 ###################################
 
-sudo veracrypt --text --dismount --slot $STACK_VERACRYPT_SLOT
-sudo veracrypt --text --dismount --slot $DATA_VERACRYPT_SLOT
+veracrypt --text --dismount --slot $STACK_VERACRYPT_SLOT
+veracrypt --text --dismount --slot $DATA_VERACRYPT_SLOT
 
 echo "-- OK: Veracrypt volumes closed"
 

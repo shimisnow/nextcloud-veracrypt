@@ -66,7 +66,13 @@ docker secret create NEXTCLOUD_MYSQL_PASSWORD <file_with_secret_data>
 
 ## Deploy
 
-At the project root, run `./scripts/mount-veracrypt-volumes.sh` to open the Veracrypt volumes and then deploy the stack
+Go to the `scripts` folder and open the Veracrypt volumes and with:
+
+```sh
+sudo ./mount-veracrypt-volumes.sh
+```
+
+Then deploy the stack
 
 ```sh
 docker stack deploy -c docker-stack.yml nextcloud

@@ -45,5 +45,5 @@ chmod +x *.sh
 And then:
 
 ```sh
-./setup-architecture.sh
+sudo ./setup-architecture.sh
 ```
