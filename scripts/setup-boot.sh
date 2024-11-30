@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load variables from file
-source "../.env"
+source ".env.conf"
 
 echo "BOOT SETUP STARTED"
 
@@ -37,7 +37,8 @@ NEXTCLOUD_STACK_VERACRYPT_SLOT=$STACK_VERACRYPT_SLOT
 NEXTCLOUD_DATA_VERACRYPT_SLOT=$DATA_VERACRYPT_SLOT
 EOF
 
-chmod 600 $BOOT_FILES_PATH/.pass
+sudo chown root:root $BOOT_FILES_PATH/.pass
+sudo chmod 600 $BOOT_FILES_PATH/.pass
 
 if [ -e "$BOOT_FILES_PATH/.pass" ]; then
   echo "-- OK: Environment variables set at $BOOT_FILES_PATH/.pass"
@@ -52,11 +53,11 @@ echo "--------"
 ##### CREATE BOOT SCRIPT #####
 ##############################
 
-cp ./nextcloud-mount-volumes-boot.sh $BOOT_FILES_PATH/nextcloud-mount-volumes-boot.sh
-chmod +x $BOOT_FILES_PATH/nextcloud-mount-volumes-boot.sh
+cp ./nextcloud-mount-volumes-boot.sh $BOOT_FILES_PATH/mount-volumes.sh
+chmod +x $BOOT_FILES_PATH/mount-volumes.sh
 
-if [ -e "$BOOT_FILES_PATH/nextcloud-mount-volumes-boot.sh" ]; then
-  echo "-- OK: Boot script created at $BOOT_FILES_PATH/nextcloud-mount-volumes-boot.sh"
+if [ -e "$BOOT_FILES_PATH/mount-volumes.sh" ]; then
+  echo "-- OK: Boot script created at $BOOT_FILES_PATH/mount-volumes.sh"
 else
   echo "-- ERROR: Boot script created was not created"
   exit 1
@@ -77,7 +78,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=$BOOT_FILES_PATH/nextcloud-mount-volumes-boot.sh
+ExecStart=$BOOT_FILES_PATH/mount-volumes.sh
 User=root
 Group=root
 EnvironmentFile=$BOOT_FILES_PATH/.pass
