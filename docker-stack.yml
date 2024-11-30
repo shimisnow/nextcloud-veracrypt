@@ -5,7 +5,7 @@ services:
     networks:
       - nextcloud
     volumes:
-      - ${DATABASE_VOLUME_BASE_PATH}/volumes/database/data:/var/lib/mysql
+      - ${STACK_MOUNT_POINT}/volumes/database/data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=/run/secrets/NEXTCLOUD_MYSQL_ROOT_PASSWORD
       - MYSQL_USER=/run/secrets/NEXTCLOUD_MYSQL_USER
@@ -48,9 +48,9 @@ services:
       - '443:443/tcp'
       - '443:443/udp' # UDP for usage of HTTP/3
     volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${NGINX_VOLUME_BASE_PATH}/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${CERTIFICATES_VOLUME_BASE_PATH}/volumes/certs:/certs
+      - ${DATA_MOUNT_POINT}/volumes/nextcloud:/var/www/html:z
+      - ${STACK_MOUNT_POINT}/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${STACK_MOUNT_POINT}/volumes/certs:/certs
     deploy:
       replicas: 1
       restart_policy:
@@ -61,8 +61,8 @@ services:
     networks:
       - nextcloud
     volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${DATA_MOUNT_POINT}/volumes/nextcloud:/var/www/html:z
+      - ${STACK_MOUNT_POINT}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
     environment:
       - MYSQL_HOST
       - MYSQL_DATABASE
@@ -84,8 +84,8 @@ services:
     networks:
       - nextcloud
     volumes:
-      - ${NEXTCLOUD_VOLUME_BASE_PATH}/volumes/nextcloud:/var/www/html:z
-      - ${PHP_VOLUME_BASE_PATH}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${DATA_MOUNT_POINT}/volumes/nextcloud:/var/www/html:z
+      - ${STACK_MOUNT_POINT}/volumes/php/php-fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
     entrypoint: /cron.sh
     deploy:
       replicas: 1
