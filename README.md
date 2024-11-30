@@ -2,15 +2,15 @@
 
 # Nextcloud with Veracrypt
 
-This project automates the deployment of Nextcloud using Docker, with [NGINX](https://nginx.org/en/) as a reverse proxy configured to support [HTTP/3](https://en.wikipedia.org/wiki/HTTP/3) and [Google Brotli](https://github.com/google/brotli) compression for optimized performance. It ensures data security by storing all user data within [Veracrypt](https://www.veracrypt.fr/en/Home.html) volumes, providing encrypted storage for sensitive files. This project aims to offer a robust self-hosted Nextcloud instance with enhanced security, speed, and encryption features.
+This project automates the deployment of Nextcloud using Docker, with [NGINX](https://nginx.org/en/) as a reverse proxy configured to support [HTTP/3](https://en.wikipedia.org/wiki/HTTP/3) and [Google Brotli](https://github.com/google/brotli) compression. It ensures data security by storing all data within [Veracrypt](https://www.veracrypt.fr/en/Home.html) volumes.
 
 ## The WHY of the project
 
-I envisioned a system that allowed me to interact with my files in a timeline-like view, create albums, and through traditional file and folder navigation at multiple platforms, including Windows and Linux. Most importantly, I wanted to ensure that all of my data was encrypted.
+This project began with a simple need: I wanted an efficient way to browse and organize my photos locally within a familiar file and folder structure. Additionally, I needed the ability to securely store my photos on an external drive with encryption, ensuring seamless access across both Windows and Linux platforms. Beyond basic storage, I also wanted to enhance my photo management experience. I envisioned features like a timeline view, a map for geotagged images, album organization, and, importantly, automatic backup from my phone—all while maintaining a user-friendly, cross-platform solution.
 
-Veracrypt became a key part of this solution. It allowed me to create encrypted containers that could be mounted as virtual drives, enabling me to browse and manage my files just like any regular filesystem on both Windows and Linux. This gave me the security of encryption without sacrificing the ease of access and flexibility I needed to organize and view my files across different operating systems.
+Veracrypt became a key part of this solution. It allowed me to create encrypted containers that could be mounted as virtual drives, enabling me to browse and manage my files just like any regular filesystem on both Windows and Linux. This gave me the security of encryption without sacrificing the ease of access and flexibility I needed.
 
-Nextcloud played an equally important role by providing me with the same tools that cloud storage services offer, but in a self-hosted, private environment. It allowed me to seamlessly access, share, and sync my files across multiple devices, while also giving me the ability to create albums and manage my data just as I would on a typical cloud service. With Nextcloud, I was able to replicate the benefits of cloud storage without compromising my privacy or being bound by subscription fees.
+Nextcloud played an equally important role by providing me with the same tools that cloud storage services offer, but in a self-hosted, private environment. It allowed me to seamlessly access, share, and sync my files across multiple devices, while also giving me the ability to create albums and manage my data just as I would on a typical cloud service.
 
 ## Containers and Volumes structure
 

@@ -1,5 +1,13 @@
 # How to deploy
 
+The deployment process consists of:
+
+1. Setup SSL certificates and Nginx
+2. Create the initial folder structure inside each Veracrypt volume
+3. Build Docker images and create Docker secrets
+4. Deploy
+5. Configure Veracrypt volumes to open on system boot
+
 ## Setup SSL certificates
 
 This project assumes that a SSL certificate (`.crt` and `.key` files) is available to use.
