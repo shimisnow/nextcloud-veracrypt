@@ -3,7 +3,7 @@
 To configure the veracrypt volumes to open at boot, execute:
 
 ```sh
-sudo ./mount-on-boot.sh
+sudo ./setup-boot.sh
 ```
 
 The script will:

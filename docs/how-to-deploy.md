@@ -2,11 +2,19 @@
 
 The deployment process consists of:
 
-1. Setup SSL certificates and Nginx
-2. Create the initial folder structure inside each Veracrypt volume
-3. Build Docker images and create Docker secrets
-4. Deploy
-5. Configure Veracrypt volumes to open on system boot
+1. Define environment variables
+2. Setup SSL certificates and Nginx
+3. Create the initial folder structure inside each Veracrypt volume
+4. Build Docker images and create Docker secrets
+5. Deploy
+6. Configure Veracrypt volumes to open on system boot
+
+## Define environment variables
+
+The deployment process has two .env files:
+
+- `.env`: used by docker
+- `scripts/.env.conf`: used by shell scripts
 
 ## Setup SSL certificates
 
@@ -16,7 +24,7 @@ The only step needed is to put the files (`.crt` and `.key`) at the directory `v
 
 ## Config Nginx
 
-All changes needs to be done at the file `volumes/nginx/nginx.conf`
+All changes need to be done at the file `volumes/nginx/nginx.conf`
 
 1. Domain
 

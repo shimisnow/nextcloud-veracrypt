@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load variables from file
-source "../.env"
+source ".env.conf"
 
 echo "ARCHITECTURE SETUP STARTED"
 
