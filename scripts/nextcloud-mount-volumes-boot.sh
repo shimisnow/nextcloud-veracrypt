@@ -14,7 +14,7 @@ local_NEXTCLOUD_DATA_VERACRYPT_SLOT=$NEXTCLOUD_DATA_VERACRYPT_SLOT
 
 veracrypt --verbose --non-interactive \
     --slot $local_NEXTCLOUD_STACK_VERACRYPT_SLOT \
-    --mount "$local_NEXTCLOUD_STACK_VOLUME_PATH=" "$local_NEXTCLOUD_STACK_MOUNT_POINT" \
+    --mount "$local_NEXTCLOUD_STACK_VOLUME_PATH" "$local_NEXTCLOUD_STACK_MOUNT_POINT" \
     --fs-options "umask=000" --pim 0 --keyfiles "" --protect-hidden no \
     --password "$local_NEXTCLOUD_VERACRYPT_VOLUME_STACK_PASS"
 
