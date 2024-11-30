@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-azuretools.vscode-docker",
+    "bierner.markdown-mermaid",
+    "william-voyek.vscode-nginx"
+  ]
+}
