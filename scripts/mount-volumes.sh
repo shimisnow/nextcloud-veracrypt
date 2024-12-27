@@ -1,11 +1,24 @@
 #!/bin/bash
 
 # Load variables from file
-source ".env.conf"
+SCRIPT_DIR=$(dirname "$0")
+source "$SCRIPT_DIR/.env.conf"
 
 echo "MOUNT PROCESS STARTED"
 
 echo "--------"
+
+################################
+##### WAIT VERACRYPT FILES #####
+################################
+
+# Wait until the file is accessible
+while [ ! -e "$STACK_VERACRYPT_VOLUME_FILE" ]; do
+  echo "-- WARN: Waiting veracrypt file to be available..."
+  sleep 5  # Check every 5 seconds
+done
+
+echo "-- OK: Veracrypt file is available..."
 
 ###################################
 ##### MOUNT VERACRYPT VOLUMES #####
