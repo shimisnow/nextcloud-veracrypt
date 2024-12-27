@@ -26,12 +26,12 @@ echo "--------"
 ##### CREATE LOG DIR #####
 ###########################
 
-mkdir -p $LOG_FILE_PATH
+mkdir -p $LOG_FILES_PATH
 
-if [ -d "$LOG_FILE_PATH" ]; then
+if [ -d "$LOG_FILES_PATH" ]; then
   echo "-- OK: Log dir created"
 else
-  echo "-- ERROR: Unable to create log dir at $LOG_FILE_PATH"
+  echo "-- ERROR: Unable to create log dir at $LOG_FILES_PATH"
   exit 1
 fi
 
