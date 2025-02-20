@@ -56,26 +56,26 @@ cp $DATA_VERACRYPT_VOLUME_FILE $backup_folder_path
 
 echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Data file copied"
 
-############################
-##### DELETE OLD FILES #####
-############################
+##############################
+##### DELETE OLD BACKUPS #####
+##############################
 
-day_to_delete=$((BACKUP_RETENTION_DAYS + 1))
-
-old_folder_prefix=$(date -d "$day_to_delete days ago" "+%Y%m%d")
-
-old_folder=$(find . -maxdepth 1 -type d -name "$old_folder_prefix*" -print)
-
-if [ ! -n "$old_folder" ]; then
-  echo "$(date "$BACKUP_LOG_DATE_FORMAT") - WARN: Old backup does not exists ($old_folder_prefix)"
+if (( BACKUP_RETENTION_COUNT < 1 )); then
+  echo "$(date "$BACKUP_LOG_DATE_FORMAT") - WARN: Backup deletion not performed. BACKUP_RETENTION_COUNT < 1"
 else
-  echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Old backup exists ($old_folder_prefix)"
-  rm -rf $old_folder
-  if [ ! -d "$old_folder" ]; then 
-    echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Old backup deleted"
-  else
-    echo "$(date "$BACKUP_LOG_DATE_FORMAT") - WARN: Old backup was not deleted"
-  fi
+  # Get the list of directories, removes empty names, sorted alphabetically, and store it in a list
+  readarray -t backups_list < <(find $BACKUP_DESTINATION_FOLDER -maxdepth 1 -type d -printf '%P\n' | grep -v '^$' | sort)
+
+  # Get the list size
+  backup_list_size=${#backups_list[@]}
+
+  # Exclude the current backup and the desired number to keep
+  backup_list_limit=$((backup_list_size - BACKUP_RETENTION_COUNT - 1))
+
+  for ((i=0; i<$backup_list_limit; i++)); do
+    rm -R $BACKUP_DESTINATION_FOLDER/${backups_list[$i]}
+    echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup '${backups_list[$i]}' deleted"
+  done
 fi
 
 ##############################
