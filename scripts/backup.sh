@@ -69,12 +69,40 @@ else
   # Get the list size
   backup_list_size=${#backups_list[@]}
 
-  # Exclude the current backup and the desired number to keep
-  backup_list_limit=$((backup_list_size - BACKUP_RETENTION_COUNT - 1))
+  # Number of backups that was keeped when running the script
+  keeped_backup=0
 
-  for ((i=0; i<$backup_list_limit; i++)); do
-    rm -R $BACKUP_DESTINATION_FOLDER/${backups_list[$i]}
-    echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup '${backups_list[$i]}' deleted"
+  # This will be 0 or 1 because only one backup (plus the current) can be stored for the day
+  keeped_backup_for_current_day=0
+
+  # Get the date (without time) that was used to create the backup for today
+  actual_backup_day=$(date "+%Y%m%d")
+
+  # -2 excludes the current backup
+  for ((i=$backup_list_size - 2; i>=0; i--)); do
+    if (($keeped_backup < $BACKUP_RETENTION_COUNT)); then
+      current_item="${backups_list[$i]}"
+      # Get the folder name without the time part
+      date_part="${current_item%%_*}"
+      # If the folder was generated today
+      if [ "$date_part" == "$actual_backup_day" ]; then
+        if (($keeped_backup_for_current_day == 0)); then
+          echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup keeped '${backups_list[$i]}'"
+          keeped_backup_for_current_day=1
+          ((keeped_backup++))
+        else
+          rm -R $BACKUP_DESTINATION_FOLDER/${backups_list[$i]}
+          echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup deleted '${backups_list[$i]}'"
+        fi
+      else
+        echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup keeped '${backups_list[$i]}'"
+        ((keeped_backup++))
+      fi
+    # Exclude older folders
+    else
+      rm -R $BACKUP_DESTINATION_FOLDER/${backups_list[$i]}
+      echo "$(date "$BACKUP_LOG_DATE_FORMAT") - INFO: Backup deleted '${backups_list[$i]}'"
+    fi
   done
 fi
 
