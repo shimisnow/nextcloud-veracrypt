@@ -1,16 +1,10 @@
 # Setup backup using cron
 
-Copy the file `scripts/backup.sh` to the location of the boot dir
+Copy the file `scripts/backup.sh` to the same location of the `.env.conf` file from the [open veracrypt volumes at boot](./open-volumes-boot.md) documentation.
 
-After run the script, an entry at the `crontab` must be manually created.
+Make the destination file as executable using `chmod +x backup.sh`
 
-Execute:
-
-```sh
-sudo crontab -e
-```
-
-and add at the end:
+Create an entry at the `crontab` using `sudo crontab -e` and add at the end of the file:
 
 ```sh
 @reboot sleep 300 && /etc/nextcloud/backup.sh >> /var/log/nextcloud/backup_$(date +\%Y\%m\%d\%H\%M).log 2>&1
