@@ -22,6 +22,21 @@ if [ ! -e "$DATA_VERACRYPT_VOLUME_FILE" ]; then
   exit 1
 fi
 
+#######################################
+##### VERIFY AVAILABLE DISK SPACE #####
+#######################################
+
+stack_filesize=$(stat --format=%s "$STACK_VERACRYPT_VOLUME_FILE")
+data_filesize=$(stat --format=%s "$DATA_VERACRYPT_VOLUME_FILE")
+# df -B 1 / is for the main partition
+main_partition_free_space=$(df -B 1 / | awk 'NR==2 {print $4}')
+
+if [ "$main_partition_free_space" -lt $((stack_filesize + data_filesize)) ]; then
+  echo "$(date "$BACKUP_LOG_DATE_FORMAT") - ERROR: Not enough space at the destination"
+  echo "------ BACKUP NOT COMPLETED"
+  exit 1
+fi
+
 ################################
 ##### CREATE BACKUP FOLDER #####
 ################################
