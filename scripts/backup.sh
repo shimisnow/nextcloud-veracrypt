@@ -2,7 +2,7 @@
 
 # Load variables from file
 SCRIPT_DIR=$(dirname "$0")
-source "$SCRIPT_DIR/boot/.env.conf"
+source "$SCRIPT_DIR/.env.conf"
 
 echo "------ BACKUP STARTED"
 
