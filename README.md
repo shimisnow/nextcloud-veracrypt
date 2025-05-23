@@ -64,16 +64,6 @@ Veracrypt allowed me to create encrypted containers that could be mounted as vir
 
 Nextcloud provide the same tools that cloud storage services offer, but in a self-hosted, private environment. It allowed me to seamlessly access, share, and sync my files across multiple devices, while also giving me the ability to create albums and manage my data just as I would on a typical cloud service.
 
-## Docker images
-
-This project uses:
-
-- [Nginx](https://hub.docker.com/r/macbre/nginx-http3) with a custom compiled version to support HTTP/3 and Brotli
-- [Nexcloud](https://hub.docker.com/_/nextcloud) with a custom extended version to include ffmpeg, zip, and others
-- [MariaDB](https://hub.docker.com/_/mariadb) as database
-- [Redis](https://hub.docker.com/_/redis) as cache
-- [Imaginary](https://github.com/h2non/imaginary) to process images
-
 ## Documentation
 
 - [How to deploy](docs/how-to-deploy.md)

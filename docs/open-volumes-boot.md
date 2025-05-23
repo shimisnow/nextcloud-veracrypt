@@ -22,8 +22,8 @@ sudo crontab -e
 and add at the end:
 
 ```sh
-@reboot /etc/nextcloud/boot/mount-volumes.sh >> /var/log/nextcloud/mount_volumes_$(date +\%Y\%m\%d\%H\%M).log 2>&1
+@reboot /etc/nextcloud/mount-volumes.sh >> /var/log/nextcloud/mount_volumes_$(date +\%Y\%m\%d\%H\%M).log 2>&1
 ```
 
-- `/etc/nextcloud/boot` is the value used at $BOOT_FILES_PATH
+- `/etc/nextcloud` is the value used at $BOOT_FILES_PATH
 - `/var/log/nextcloud` is the value used at $LOG_FILES_PATH
