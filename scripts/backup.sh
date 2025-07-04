@@ -59,7 +59,7 @@ fi
 ##### COPY STACK FILE #####
 ###########################v
 
-cp $STACK_VERACRYPT_VOLUME_FILE $backup_folder_path
+rsync --progress "$STACK_VERACRYPT_VOLUME_FILE" "$backup_folder_path"
 
 echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Stack file copied"
 
@@ -67,7 +67,7 @@ echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Stack file copied"
 ##### COPY DATA FILE #####
 ##########################
 
-cp $DATA_VERACRYPT_VOLUME_FILE $backup_folder_path
+rsync --progress "$DATA_VERACRYPT_VOLUME_FILE" "$backup_folder_path"
 
 echo "$(date "$BACKUP_LOG_DATE_FORMAT") - OK: Data file copied"
 
